@@ -1,7 +1,9 @@
-package aplikacja.projekt.Service;
+package aplikacja.projekt.Controller;
 
 import aplikacja.projekt.Model.Friendship;
 import aplikacja.projekt.Model.Person;
+import aplikacja.projekt.Service.FriendshipService;
+import aplikacja.projekt.Service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +54,7 @@ public class PersonController {
     }
 
     //usuwam osobe ale tez musze zawrzec wiadomosci i przyjaciol ze strony tej osoby
-    @DeleteMapping("/deletePerson{id}")
+    @DeleteMapping("/deletePerson/{id}")
     public ResponseEntity<Void> deletePersonById(@PathVariable Long id){
         personService.deleteById(id);
 

@@ -1,7 +1,8 @@
-package aplikacja.projekt.Service;
+package aplikacja.projekt.Controller;
 
 import aplikacja.projekt.Model.Friendship;
 import aplikacja.projekt.Model.Person;
+import aplikacja.projekt.Service.FriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
