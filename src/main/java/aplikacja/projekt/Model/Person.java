@@ -1,7 +1,6 @@
 package aplikacja.projekt.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,9 +10,8 @@ import java.util.List;
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
-    @JsonManagedReference
     private String nickname;
 
 
@@ -22,19 +20,9 @@ public class Person {
 //            inverseJoinColumns=@JoinColumn(name="friendId")
 //    )
 
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personOne")
     private List<Friendship> ListOfFriends = new ArrayList<Friendship>();
 
-    public List<Friendship> getListOfFriendsTwo() {
-        return ListOfFriendsTwo;
-    }
-
-    public void setListOfFriendsTwo(List<Friendship> listOfFriendsTwo) {
-        ListOfFriendsTwo = listOfFriendsTwo;
-    }
-
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personTwo")
     private List<Friendship> ListOfFriendsTwo = new ArrayList<Friendship>();
 
@@ -45,8 +33,16 @@ public class Person {
 //    )
 //    private List<Person> friendOf;
 
+    public void setListOfFriendsTwo(List<Friendship> listOfFriendsTwo) {
+        ListOfFriendsTwo = listOfFriendsTwo;
+    }
+
     public List<Friendship> getListOfFriends() {
         return ListOfFriends;
+    }
+
+    public List<Friendship> getListOfFriendsTwo() {
+        return ListOfFriendsTwo;
     }
 
     public void setListOfFriends(List<Friendship> listOfFriends) {
@@ -64,7 +60,7 @@ public class Person {
     public Long getID() {
         return ID;
     }
-
+    @JsonIgnore
     public void setID(Long ID) {
         this.ID = ID;
     }

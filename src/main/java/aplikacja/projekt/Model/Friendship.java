@@ -1,24 +1,21 @@
 package aplikacja.projekt.Model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 
 @Entity
 public class Friendship {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @JoinColumn(name = "personOne_id")
-    @JsonBackReference
     @ManyToOne
+    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo" }, allowSetters=true)
     private Person personOne;
 
-    @JoinColumn(name = "personTwo_id")
-    @JsonBackReference
     @ManyToOne
+    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo" }, allowSetters=true)
     private Person personTwo;
 
     public Friendship() {
