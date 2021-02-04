@@ -11,11 +11,11 @@ public class Friendship {
     private Long ID;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo" }, allowSetters=true)
+    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo","listOfMessagesFrom", "listOfMessagesTo" }, allowSetters=true)
     private Person personOne;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo" }, allowSetters=true)
+    @JsonIgnoreProperties(value = { "listOfFriends", "listOfFriendsTwo","listOfMessagesFrom", "listOfMessagesTo" }, allowSetters=true)
     private Person personTwo;
 
     public Friendship() {
@@ -42,3 +42,8 @@ public class Friendship {
         this.personTwo = personTwo;
     }
 }
+/**
+ *
+
+ *
+ */
