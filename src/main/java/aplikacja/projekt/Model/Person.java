@@ -12,26 +12,22 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+    @Column(unique = true)
     private String nickname;
 
+    ///dla wiadomosci
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personFrom")
+    private List<Message> listOfMessagesFrom = new ArrayList<Message>();
 
-//    @JoinTable(name="tbl_friends",
-//            joinColumns=@JoinColumn(name="personId"),
-//            inverseJoinColumns=@JoinColumn(name="friendId")
-//    )
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personTo")
+    private List<Message> ListOfMessagesTo = new ArrayList<Message>();
 
+    //dla relacji przyjaciele
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personOne")
     private List<Friendship> ListOfFriends = new ArrayList<Friendship>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personTwo")
     private List<Friendship> ListOfFriendsTwo = new ArrayList<Friendship>();
-
-//    @ManyToMany
-//    @JoinTable(name="tbl_friends",
-//            joinColumns=@JoinColumn(name="friendId"),
-//            inverseJoinColumns=@JoinColumn(name="personId")
-//    )
-//    private List<Person> friendOf;
 
     public void setListOfFriendsTwo(List<Friendship> listOfFriendsTwo) {
         ListOfFriendsTwo = listOfFriendsTwo;
@@ -60,7 +56,8 @@ public class Person {
     public Long getID() {
         return ID;
     }
-    @JsonIgnore
+
+    //@JsonIgnore
     public void setID(Long ID) {
         this.ID = ID;
     }
@@ -80,21 +77,35 @@ public class Person {
             //friends += person.getNickname();
         }
 
-
         return "Person{" +
                 "ID=" + ID +
                 ", nickname='" + nickname +"}";
     }
 
-//    public List<Person> getFriendOf() {
-//        return friendOf;
-//    }
-//
-//    public void setFriendOf(List<Person> friendOf) {
-//        this.friendOf = friendOf;
-//    }
-    // moge pokazacvvspolnych znajomych
-    //spravvdzanie przy vpisyvvaniu nazvy
+    public List<Message> getListOfMessagesFrom() {
+        return listOfMessagesFrom;
+    }
+
+    public void setListOfMessagesFrom(List<Message> listOfMessagesFrom) {
+        this.listOfMessagesFrom = listOfMessagesFrom;
+    }
+
+    public List<Message> getListOfMessagesTo() {
+        return ListOfMessagesTo;
+    }
+
+    public void setListOfMessagesTo(List<Message> listOfMessagesTo) {
+        ListOfMessagesTo = listOfMessagesTo;
+    }
 }
 
-//{"nickname": "Fancia", "listOfFriends": null}
+
+/**
+ *
+ *
+ {"nickname": "Baby"}
+
+ {"nickname": "KalaBBB", "id": 4}
+
+ *
+ */

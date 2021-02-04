@@ -1,26 +1,31 @@
 package aplikacja.projekt.Repository;
 
 import aplikacja.projekt.Model.Friendship;
+import aplikacja.projekt.Model.Message;
+import aplikacja.projekt.Model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
 
-   // @Query(" SELECT p from Person p where p.nickname LIKE :text order by p.nickname")
-   // List<Person> findPlayersContainsString(String text);
+    @Query(" SELECT f.personOne.ID, f.personOne.nickname, f.personTwo.nickname FROM Friendship f ")
+    Optional<List<Friendship>> findAllFriendships();
 
-//    @Transactional
-//    public default void insertWithQuery(Person person) {
-//        entityManager.createNativeQuery(
-//                "INSERT INTO person (nickname, last_name) VALUES (?,?,?)")
-//                .setParameter(1, person.getId())
-//                .setParameter(2, person.getFirstName())
-//                .setParameter(3, person.getLastName())
-//                .executeUpdate();
-//    }
+    @Query(" SELECT f.personOne.nickname, f.personTwo.nickname FROM Friendship f " +
+            "where f.personOne = :person")
+    Optional<List<Friendship>> findFriendsForID(Person person);
 
-   // Person findByNickname();
+    @Query(" SELECT f FROM Friendship f " +
+            "where f.personOne = :personOne and f.personTwo = :personTwo")
+    Optional<Friendship> findFriendshipBetweenPeople(Person personOne, Person personTwo);
 
-   // Person findByID();
+    @Query(" SELECT f FROM Friendship f " +
+            "where (f.personTwo = :person) or (f.personTwo = :person)")
+    Optional<List<Friendship>> findAllFreindshipsThisPersonHasWithEveryoneAndBack(Person person);
+
 }
