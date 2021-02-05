@@ -109,10 +109,10 @@ public class MessageController {
     }
 
     @GetMapping("/getMessageByID/{ID}")
-    public ResponseEntity<Void> getMessageByID(
+    public ResponseEntity<Message> getMessageByID(
             @PathVariable Long ID){
-            messageService.getMessageByID(ID);
-            return ResponseEntity.ok().build();
+
+            return ResponseEntity.ok(messageService.getMessageByID(ID));
     }
 
     @GetMapping("/getAllMessages")
