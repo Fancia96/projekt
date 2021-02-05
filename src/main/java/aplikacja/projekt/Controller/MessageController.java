@@ -108,6 +108,14 @@ public class MessageController {
         return ResponseEntity.ok( messageService.getAllMessagesBetweenIDs(personOneID,personTwoID));
     }
 
+    @GetMapping("/findMessagesContainATextBetweenIDs/{personOneID}/{personTwoID}")
+    public ResponseEntity<List<Message>> findMessagesContainATextBetweenIDs(
+            @PathVariable Long personOneID, @PathVariable Long personTwoID,
+            @RequestBody Message message){
+
+        return ResponseEntity.ok( messageService.findMessagesContainATextBetweenIDs(personOneID, personTwoID, message));
+    }
+
     @GetMapping("/getMessageByID/{ID}")
     public ResponseEntity<Message> getMessageByID(
             @PathVariable Long ID){

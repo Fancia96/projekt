@@ -69,7 +69,11 @@ public class MessageControllerIntegrationTest {
     private void createRelation(){
         Friendship friendship = new Friendship(
                 personRepository.getOne(1l), personRepository.getOne(2l));
-        friendshipRepository.saveAndFlush(friendship);
+        friendshipRepository.save(friendship);
+
+        Friendship friendship2 = new Friendship(
+                personRepository.getOne(2l), personRepository.getOne(1l));
+        friendshipRepository.save(friendship2);
     }
 
     @Test
@@ -80,7 +84,7 @@ public class MessageControllerIntegrationTest {
 
         createRelation();
 
-        Message message = new Message("tek");
+        Message message = new Message(personRepository.findById(1l).get(),personRepository.findById(2l).get(),"tek");
 
         mvc.perform(post("/sendMessageBetweenIDs/1/2")
                 .content(om.writeValueAsString(message))

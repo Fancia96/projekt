@@ -19,6 +19,6 @@ public class ProjektApplication {
 
 	public static String messageNotFound = "~~Message not found~~";
 
-	public static String[] badWords = {"milk", "league"};
+	public static String[] badWords = {"milk", "league", "hai", "java"};
 
 }

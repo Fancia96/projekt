@@ -34,8 +34,10 @@ public class MessageService {
                     personTwo.get(), personOne.get());
 
             if(findFriendshipOne.isPresent() && findFriendshipTwo.isPresent()){
+                String messageEdited = correctMessage(message.getMsg());
+
                 Message messageAdd = new Message(
-                        personOne.get(), personTwo.get(), message.getMsg());
+                        personOne.get(), personTwo.get(), messageEdited);
 
                 return messageRepository.save(messageAdd);
             }
@@ -45,6 +47,20 @@ public class MessageService {
         }
         throw new ObjectNotFoundException(MessageService.class, ProjektApplication.personNotFound);
 
+    }
+
+    private String correctMessage(String msg){
+        String message = msg;
+        for(String bad : ProjektApplication.badWords) {
+            if(msg.contains(bad)) {
+                String replaceWithThis = "";
+                for (int i = 0; i <= bad.length(); i++) {
+                    replaceWithThis += "*";
+                }
+                message = message.replaceAll(bad, replaceWithThis);
+            }
+        }
+        return message;
     }
 
     public void deleteMessageByID(Long ID){
@@ -83,6 +99,21 @@ public class MessageService {
             if (list.isPresent()) {
                 return list.get();
             }
+        }
+        throw new ObjectNotFoundException(MessageService.class, ProjektApplication.personNotFound);
+    }
+
+    public List<Message> findMessagesContainATextBetweenIDs(
+            Long personOneID, Long personTwoID, Message message){
+        Optional<Person> personOne = personRepository.findById(personOneID);
+        Optional<Person> personTwo = personRepository.findById(personTwoID);
+
+        if(personOne.isPresent() && personTwo.isPresent()) {
+            Optional<List<Message>> list = messageRepository.findMessagesContainATextBetweenIDs(personOne.get(), personTwo.get(), message.getMsg().toUpperCase());
+            if (list.isPresent()) {
+                return list.get();
+            }
+            return null;
         }
         throw new ObjectNotFoundException(MessageService.class, ProjektApplication.personNotFound);
     }

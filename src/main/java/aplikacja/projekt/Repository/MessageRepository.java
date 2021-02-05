@@ -37,4 +37,9 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "where (msg.personFrom = :person) or (msg.personTo = :person)")
     Optional<List<Message>> findAllMessagesThisPersonSentAndReceived(Person person);
 
+    @Query(" SELECT msg FROM Message msg " +
+            "where ((msg.personFrom = :personFrom and msg.personTo = :personTo) or " +
+            "(msg.personTo = :personFrom and msg.personFrom = :personTo)) and UPPER(msg.msg) LIKE %:msg% ")
+    Optional<List<Message>> findMessagesContainATextBetweenIDs(Person personFrom, Person personTo, String msg);
+
 }

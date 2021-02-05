@@ -54,6 +54,16 @@ public class FriendshipControllerIntegrationTest {
         personRepository.save(person2);
     }
 
+    private void createRelation(){
+        Friendship friendship = new Friendship(
+                personRepository.getOne(1l), personRepository.getOne(2l));
+        friendshipRepository.save(friendship);
+
+        Friendship friendship2 = new Friendship(
+                personRepository.getOne(2l), personRepository.getOne(1l));
+        friendshipRepository.save(friendship2);
+    }
+
     @Test
     public void shouldCreateFriendship() throws Exception {
         clean();
@@ -85,14 +95,12 @@ public class FriendshipControllerIntegrationTest {
 
         createTwoPeople();
 
-        Friendship friendship = new Friendship(
-                personRepository.getOne(1l), personRepository.getOne(2l));
-        friendshipRepository.save(friendship);
+        createRelation();
 
         mvc.perform(get("/getAllFriendships")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
@@ -129,9 +137,7 @@ public class FriendshipControllerIntegrationTest {
 
         createTwoPeople();
 
-        Friendship friendship = new Friendship(
-                personRepository.findById(1l).get(), personRepository.findById(2l).get());
-        friendshipRepository.saveAndFlush(friendship);
+        createRelation();
 
         mvc.perform(MockMvcRequestBuilders.delete("/deleteFriendshipBetweenIDs/1/2")
                 .contentType(MediaType.APPLICATION_JSON))

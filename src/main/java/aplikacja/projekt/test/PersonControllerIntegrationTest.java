@@ -88,7 +88,6 @@ public class PersonControllerIntegrationTest {
         last_id ++;
     }
 
-
     @Test
     public void shouldNotFindPersonById() throws Exception {
         clean1();

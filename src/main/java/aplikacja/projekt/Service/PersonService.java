@@ -101,6 +101,14 @@ public class PersonService {
         throw new ObjectNotFoundException(MessageService.class, ProjektApplication.personNotFound);
     }
 
+    public Person findPersonByName(Person personFind){
+        Optional<Person> person = personRepository.findPersonByName(personFind.getNickname());
+        if(person.isPresent()){
+            return person.get();
+        }
+        throw new ObjectNotFoundException(MessageService.class, ProjektApplication.personNotFound);
+    }
+
     public List<Person> getEverything(){
         return personRepository.findAll();
     }

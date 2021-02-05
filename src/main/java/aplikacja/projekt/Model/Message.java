@@ -29,30 +29,17 @@ public class Message {
     @JsonIgnoreProperties(value = { "listOfMessagesFrom", "listOfMessagesTo", "listOfFriends", "listOfFriendsTwo"  }, allowSetters=true)
     private Person personTo;
 
-    private String correctMessage(String msg){
-        String message = msg;
-        for(String bad : ProjektApplication.badWords) {
-            String replaceWithThis = "";
-            for(int i=0 ; i <= bad.length(); i++){
-                replaceWithThis += "*";
-            }
-
-            message.replaceAll(bad, replaceWithThis);
-        }
-        return message;
-    }
-
     public Message() {}
 
     public Message(String msg){
-        this.msg = correctMessage(msg);
+        this.msg = msg;
         this.date = new Date();
     }
 
     public Message(Person personFrom, Person personTo, String msg){
         this.personFrom = personFrom;
         this.personTo = personTo;
-        this.msg = correctMessage(msg);
+        this.msg = msg;
         this.date = new Date() ;
     }
 

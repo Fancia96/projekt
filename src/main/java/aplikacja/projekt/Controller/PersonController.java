@@ -62,6 +62,11 @@ public class PersonController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/findPersonByName")
+    public ResponseEntity<Person> findPersonByName(@RequestBody Person person){
+        return ResponseEntity.ok(personService.findPersonByName(person));
+    }
+
     @GetMapping("/findPersonByID/{ID}")
     public ResponseEntity<Person> findPersonByID(@PathVariable Long ID){
         return ResponseEntity.ok(personService.findPersonByID(ID));

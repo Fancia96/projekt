@@ -13,4 +13,8 @@ import java.util.Optional;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
+    @Query(" SELECT p FROM Person p " +
+            "where p.nickname = :name ")
+    Optional<Person> findPersonByName(String name);
+
 }
